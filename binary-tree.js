@@ -59,7 +59,18 @@ class BinaryTree {
    * The path doesn't need to start at the root, but you can't visit a node more than once. */
 
   maxSum() {
-
+    if (!this.root) return 0;
+    let maxSum = -Infinity;
+    function maxSumHelper(node) {
+      if (!node) return 0;
+      let leftSum = Math.max(maxSumHelper(node.left), 0);
+      let rightSum = Math.max(maxSumHelper(node.right), 0);
+      let currentSum = node.val + leftSum + rightSum;
+      maxSum = Math.max(maxSum, currentSum);
+      return node.val + Math.max(leftSum, rightSum);
+    }
+    maxSumHelper(this.root);
+    return maxSum;
   }
 
   /** nextLarger(lowerBound): return the smallest value in the tree
