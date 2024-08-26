@@ -77,7 +77,21 @@ class BinaryTree {
    * which is larger than lowerBound. Return null if no such value exists. */
 
   nextLarger(lowerBound) {
-
+    if (!this.root) return null;
+    let valuesSeen = [];
+    let nodesToVisit = [this.root];
+    while (nodesToVisit.length > 0) {
+      let node = nodesToVisit.pop();
+      valuesSeen.push(node.val);
+      if (node.left) nodesToVisit.push(node.left);
+      if (node.right) nodesToVisit.push(node.right);
+    }
+    valuesSeen.sort();
+    for (let i = 0; i < valuesSeen.length; i++) {
+      // console.log(valuesSeen[i], lowerBound);
+      if (valuesSeen[i] > lowerBound) return valuesSeen[i];
+    }
+    return null;
   }
 
   /** Further study!
